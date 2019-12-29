@@ -104,12 +104,10 @@ modules-right =
 
 
 
-
-
 [module/updates]
 type = custom/script
 exec = ~/bin/updates
-click-left = kitty -e sudo xbps-install -Su
+click-left = kitty -e sudo xbps-install -Su;~/bin/updates
 interval = 10800
 format-foreground				= ${colors.primary}
 
