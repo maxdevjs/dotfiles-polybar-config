@@ -60,13 +60,16 @@ override-redirect = false
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
 
+cursor-click = pointer
+
 ;-------;
 ; FONTS ;
 ;-------;
 
 font-0 = Hack :size=14;3
 font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=12;3"
-font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=8;3"
+;font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=8;3"
+font-2 = "NotoColorEmoji:fontformat=truetype:scale=10:antialias=false"
 font-3 = "Font Awesome 5 Brands:pixelsize=8;3"
 font-4 = "Terminus:pixelsize=8;2"
 font-5 = "FontAwesome:pixelsize=18;2"
@@ -103,12 +106,11 @@ modules-center = bspwm
 modules-right = 
 
 
-
 [module/updates]
 type = custom/script
 exec = ~/bin/updates
-click-left = kitty -e sudo xbps-install -Su;~/bin/updates
-interval = 10800
+click-left					= kitty -e sudo xbps-install -Su && ~/bin/updates &
+interval					= 10800
 format-foreground				= ${colors.primary}
 
 
