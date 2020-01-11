@@ -308,6 +308,7 @@ format-volume = <ramp-volume> <label-volume>
 ; Available tokens:
 ;   %percentage% (default)
 ;label-volume = %percentage%%
+label-volume = 
 
 #format-volume-background 			= ${colors.background}
 format-volume-foreground 			= ${colors.primary}
