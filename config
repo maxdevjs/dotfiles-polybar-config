@@ -251,7 +251,8 @@ enable-scroll=true
 ; $ ls -1 /sys/class/backlight/
 card = intel_backlight
 
-label = %percentage%%
+#label = %percentage%%
+label = 
 format = <ramp> <label>
 
 #format-padding = 4
