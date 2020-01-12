@@ -70,9 +70,9 @@ font-0 = Hack :size=14;3
 font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=12;3"
 ;font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=8;3"
 font-2 = "NotoColorEmoji:fontformat=truetype:scale=10:antialias=false"
-font-3 = "Font Awesome 5 Brands:pixelsize=8;3"
-font-4 = "Terminus:pixelsize=8;2"
-font-5 = "FontAwesome:pixelsize=18;2"
+;font-3 = "Font Awesome 5 Brands:pixelsize=8;3"
+;font-4 = "Terminus:pixelsize=8;2"
+;font-5 = "FontAwesome:pixelsize=18;2"
 
 ;------;
 ; TRAY ;
@@ -93,7 +93,7 @@ tray-detached = false
 modules-left = xwindow
 #modules-center = date time memory
 #modules-right = go-weather volume battery
-modules-right = volume backlight battery updates
+modules-right = volume backlight battery updates weather
 
 
 [bar/bottom]
@@ -114,6 +114,12 @@ click-right = ~/bin/updates
 interval					= 10800
 format-foreground				= ${colors.primary}
 
+[module/weather]
+type = custom/script
+exec = ~/bin/weather
+click-left = ~/bin/weather 1
+interval					= 10800
+format-foreground				= ${colors.primary}
 
 [module/nm-applet]
 type = custom/script
@@ -622,15 +628,6 @@ override-redirect = false
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
 ;-------;
-; FONTS ;
-;-------;
-
-font-0 = Nerd:size=6;3
-font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=8;3"
-font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=8;3"
-font-3 = "Font Awesome 5 Brands:pixelsize=8;3"
-font-4 = "Terminus:pixelsize=8;2"
-font-5 = "FontAwesome:pixelsize=8;2"
 ;--------;
 ; COLORS ;
 ;--------;
