@@ -279,11 +279,12 @@ format-charging =  <label-charging>
 format-charging-padding = 4
 format-charging-foreground			= ${colors.foreground-alt}
 
-label-discharging = %percentage%%
+;label-discharging = %percentage%%
+label-discharging = 
 format-discharging = <ramp-capacity> <label-discharging>
 format-discharing-padding = 4
 format-discharging-foreground			= ${colors.primary}
-format-discharging-background			= ${colors.background}
+;format-discharging-background			= ${colors.background}
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 
@@ -336,7 +337,7 @@ ramp-volume-1 = 
 ramp-volume-2 = 
 ramp-headphones-0 = 
 
-
+click-right = pavucontrol &
 
 
 
