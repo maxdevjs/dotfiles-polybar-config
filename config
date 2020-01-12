@@ -111,7 +111,7 @@ type = custom/script
 exec = ~/bin/updates
 click-left					= kitty -e sudo xbps-install -Su && ~/bin/updates
 click-right = ~/bin/updates
-interval					= 10800
+interval					= 1800
 format-foreground				= ${colors.primary}
 
 [module/weather]
@@ -270,57 +270,57 @@ ramp-2 = 
 padding = 4
 
 [module/battery]
-type = internal/battery
+type 						= internal/battery
 
-battery = BAT0
-poll-interval = 1
+battery 					= BAT0
+poll-interval 					= 1
 
-full-at = 95
-label-full =
-format-full = <ramp-capacity> <label-full>
+full-at 					= 95
+label-full 					=
+format-full 					= <ramp-capacity> <label-full>
 format-full-foreground				= ${colors.primary}
 
-label-charging = Charging %percentage%%
-format-charging =  <label-charging>
-format-charging-padding = 4
-format-charging-foreground			= ${colors.foreground-alt}
+label-charging 					= %percentage%%
+format-charging 				=  <label-charging>
+format-charging-padding 			= 0
+format-charging-foreground			= ${colors.primary}
 
-;label-discharging = %percentage%%
-label-discharging = 
-format-discharging = <ramp-capacity> <label-discharging>
-format-discharing-padding = 4
-format-discharging-foreground			= ${colors.primary}
+label-discharging 				= %percentage%%
+;label-discharging 				= 
+format-discharging 				= <ramp-capacity> <label-discharging>
+format-discharing-padding 			= 4
+format-discharging-foreground			= ${colors.secondary}
 ;format-discharging-background			= ${colors.background}
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
+ramp-capacity-0 				= 
+ramp-capacity-1 				= 
+ramp-capacity-2 				= 
+ramp-capacity-3 				= 
+ramp-capacity-4 				= 
 
 [module/volume]
-type = internal/pulseaudio
+type 						= internal/pulseaudio
 ; Sink to be used, if it exists (find using `pacmd list-sinks`, name field)
 ; If not, uses default sink
-sink = alsa_output.pci-0000_00_1b.0.analog-stereo
+sink 						= alsa_output.pci-0000_00_1b.0.analog-stereo
 ; Use PA_VOLUME_UI_MAX (~153%) if true, or PA_VOLUME_NORM (100%) if false
 ; Default: true
-use-ui-max = true
+use-ui-max 					= true
 
 ; Available tags:
 ;   <label-volume> (default)
 ;   <ramp-volume>
 ;   <bar-volume>
-format-volume = <ramp-volume> <label-volume>
+format-volume 					= <ramp-volume> <label-volume>
 
 ; Available tokens:
 ;   %percentage% (default)
 ;label-volume = %percentage%%
-label-volume = 
+label-volume 					= 
 
 #format-volume-background 			= ${colors.background}
 format-volume-foreground 			= ${colors.primary}
-#format-volume-padding = 4
+;format-volume-padding = 4
 
 ; Available tags:
 ;   <label-muted> (default)
@@ -330,20 +330,20 @@ format-volume-foreground 			= ${colors.primary}
 
 format-muted-foreground 			= ${colors.foreground-alt}
 format-muted-background 			= ${colors.primary}
-format-muted-padding = 4
+format-muted-padding 				= 2
 
 ; Available tokens:
 ;   %percentage% (default)
-label-muted = 
-label-muted-foreground = #666
+label-muted 					= 
+label-muted-foreground 				= #666
 
 ; Only applies if <ramp-volume> is used
-ramp-volume-0 = 
-ramp-volume-1 = 
-ramp-volume-2 = 
-ramp-headphones-0 = 
+ramp-volume-0 					= 
+ramp-volume-1 					= 
+ramp-volume-2 					= 
+ramp-headphones-0 				= 
 
-click-right = pavucontrol &
+click-right 					= pavucontrol &
 
 
 
