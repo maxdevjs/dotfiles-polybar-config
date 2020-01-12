@@ -118,7 +118,7 @@ format-foreground				= ${colors.primary}
 type = custom/script
 exec = ~/bin/weather
 click-left = ~/bin/weather 1
-interval					= 10800
+interval					= 1800
 format-foreground				= ${colors.primary}
 
 [module/nm-applet]
@@ -277,7 +277,8 @@ poll-interval 					= 1
 
 full-at 					= 95
 label-full 					=
-format-full 					= <ramp-capacity> <label-full>
+;format-full 					= <ramp-capacity> <label-full>
+format-full 					= 
 format-full-foreground				= ${colors.primary}
 
 label-charging 					= %percentage%%
