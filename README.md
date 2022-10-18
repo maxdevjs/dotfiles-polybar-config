@@ -1,2 +1,2 @@
 # dotfiles-polybar-config
-Configuration files for polybar
+Configuration files for [polybar](https://github.com/polybar/polybar)
