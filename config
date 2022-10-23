@@ -1,5 +1,3 @@
-
-
 ;--------;
 ; COLORS ;
 ;--------;
@@ -17,10 +15,11 @@ border-color = ${xrdb:#f3f3f3}
 primary = ${xrdb:primary:#ffb52a}
 secondary = ${xrdb:secondary:#e60053}
 
-;--------------------------------------BSPWM BAR --------------------------
 [bar/top]
 
-background 					= ${colors.background-alt-1}
+background = ${colors.background-alt-1}
+;override-redirect = true
+;wm-restack = i3
 
 ;---------------;
 ; MISCELLANEOUS ;
@@ -53,10 +52,13 @@ monitor-strict=true
 ; LOCATION ;
 ;----------;
 
-monitor = LVDS1
-wm-restack = bspwm
-restack-window = true
-override-redirect = false
+;monitor = ${HDMI-1:MONITOR}
+;monitor = ${env:MONITOR:HDMI-1}
+;monitor = HDMI-1
+;monitor = eDP-1
+;wm-restack = bspwm
+;restack-window = true
+;override-redirect = false
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
 
@@ -67,7 +69,7 @@ cursor-click = pointer
 ;-------;
 
 font-0 = Hack :size=14;3
-font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=12;3"
+font-1 = "Font Awesome 6 Free:style=Solid:pixelsize=12;3"
 ;font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=8;3"
 font-2 = "NotoColorEmoji:fontformat=truetype:scale=10:antialias=false"
 ;font-3 = "Font Awesome 5 Brands:pixelsize=8;3"
@@ -79,52 +81,111 @@ font-2 = "NotoColorEmoji:fontformat=truetype:scale=10:antialias=false"
 ;------;
 
 tray-position = right
-#tray-background = #0063ff
+tray-background = #0063ff
 tray-scale = 1.0
 tray-maxseize = 16
 tray-padding = 12
 tray-detached = false
 
-;---------;
-; MODULES ;
-;---------;
+;-------------;
+; MODULES TOP ;
+;-------------;
 
 #modules-center = title focusedw
 modules-left = xwindow
-#modules-center = date time memory
-#modules-right = go-weather volume battery
-modules-right = volume backlight battery updates weather
+modules-center = 
+modules-right = volume battery 
 
+;----------------;
+; MODULES BOTTOM ;
+;----------------;
 
 [bar/bottom]
 inherit = bar/top
 
+;monitor = HDMI-1
+
 bottom = true
 tray-position = ""
 modules-left = 
-modules-center = bspwm
-modules-right = 
+modules-center = updates i3
+modules-right = github
 
+;---------;
+; MODULES ;
+;---------;
+
+[module/github]
+type = internal/github
+
+token = ${file:$HOME/Me/tokens/github-token}
+user = "maxdevjs"
+empty-notifications = false
+format-offline = <label-offline>
+label-offline = Offline
+interval = 10
+#api-url = https://hub.example.org/api/v3/
+label-github-foreground = ${colors.primary}
+
+[module/i3]
+type = internal/i3
+
+pin-workspaces = false
+show-urgent = true
+strip-wsnumbers = true
+index-sort = true
+fuzzy-match = true
+#enable-scroll = true
+#wrapping-scroll = true
+#scroll-up = i3-msg workspace next_on_output
+#scroll-down = i3-msg workspace prev_on_output
+
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 0;
+ws-icon-default = ♚
+
+#label-focused =  ▃ %icon%
+label-focused = ▃
+;label-focused-foreground = ${colors.primary}
+label-focused-foreground = ${colors.background-alt-1}
+label-focused-background = ${colors.primary}
+label-focused-padding = 2
+;label-unfocused = %index% %icon% ▃ %output%
+label-unfocused = %icon% %index% %output%
+label-unfocused-foreground = #3b4252
+label-unfocused-padding = 1
+label-visible = %index% %output%
+label-visible-foreground = #0063ff
+label-visible-padding = 1
+label-urgent = %index%
+label-urgent-foregound = ${colors.secondary}
+label-urgent-background = ${colors.primary}
+label-urgent-padding = 4
 
 [module/updates]
 type = custom/script
-exec = ~/bin/updates
-click-left					= kitty -e sudo xbps-install -Su && ~/bin/updates
-click-right = ~/bin/updates
-interval					= 1800
-format-foreground				= ${colors.primary}
-
-[module/weather]
-type = custom/script
-exec = ~/bin/weather
-click-left = ~/bin/weather 1
-interval					= 1800
-format-foreground				= ${colors.primary}
-
-[module/nm-applet]
-type = custom/script
-format = <label>
-exec = nm-applet &
+;exec = $HOME/.local/bin/system-updates
+exec = ls
+label-maxlen = 50
+label = 
+#label = %output%
+label-separator = |
+#format = <label>
+#click-left = solus-sc
+#click-left = kitty -e $HOME/.local/bin/system-updates
+#click-left = $HOME/.local/bin/system-updates
+#click-right = solus-sc
+click-left = solus-sc
+;interval = 1800
+format-foreground = ${colors.primary}
 
 [module/xwindow]
 type = internal/xwindow
@@ -132,545 +193,36 @@ type = internal/xwindow
 label = %title%
 label-maxlen = 50
 format = <label>
-#format-background				= ${colors.background}
-format-foreground				= ${colors.primary}
-format-padding = 4
-
-[module/bspwm]
-type = internal/bspwm
-
-; Only show workspaces defined on the same output as the bar
-; NOTE: The bspwm and XRandR monitor names must match, which they do by default.
-; But if you rename your bspwm monitors with bspc -n this option will no longer
-; behave correctly.
-; Default: true
-pin-workspaces = true
-
-; Use fuzzy (partial) matching on labels when assigning 
-; icons to workspaces
-; Example: code;♚ will apply the icon to all workspaces 
-; containing 'code' in the label
-; Default: false
-fuzzy-match = true
-
-; ws-icon-[0-9]+ = label;icon
-; Note that the label needs to correspond with the bspwm workspace name
-ws-icon-0 = 1-web;♚
-ws-icon-1 = 2-shell;♛
-#ws-icon-2 = graphics;♜
-#ws-icon-3 = mail;♝
-#ws-icon-4 = web;♞
-ws-icon-9 = 9-what;♛
-ws-icon-10 = 10-monitor;
-ws-icon-default = ♟
-
-; Available tags:
-;   <label-monitor>
-;   <label-state> - gets replaced with <label-(focused|urgent|occupied|empty)>
-;   <label-mode> - gets replaced with <label-(monocle|tiled|fullscreen|floating|locked|sticky|private)>
-; Default: <label-state>
-format = <label-state> <label-mode>
-
-; Available tokens:
-;   %name%
-; Default: %name%
-label-monitor = %name%
-
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
-label-focused = %icon%
-label-focused-foreground 			= ${colors.primary}
-label-focused-background 			= ${colors.background} 
-label-focused-underline 			= ${colors.secondary}
-label-focused-padding				= 5
-
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
-label-occupied = %name%
-label-occupied-foreground 			= ${colors.foreground-alt}
-label-occupied-background 			= ${colors.background-alt}
-label-occupied-underline 			= ${colors.primary}
-
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
-label-urgent = %icon%
-label-urgent-foreground 			= ${colors.primary}
-label-urgent-background 			= ${colors.secondary}
-label-urgent-underline 				= ${colors.primary}
-
-; If any values for label-dimmed-N are defined, the workspace/mode
-; colors will get overridden with those values if the monitor is out of focus
-; To only override workspaces in a specific state, use:
-;   label-dimmed-focused
-;   label-dimmed-occupied
-;   label-dimmed-urgent
-;   label-dimmed-empty
-label-dimmed-foreground = #555
-label-dimmed-focused-background = #f00
-#label-dimmed-underline = ${bar/top.background}
-
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
-label-empty = %name%
-label-empty-foreground 				= ${colors.foreground-alt-1}
-label-empty-background 				= ${colors.background-alt-1}
-
-; The following labels will be used to indicate the layout/mode
-; for the focused workspace. Requires <label-mode>
-;
-; Available tokens:
-;   None
-;label-monocle = 
-;label-tiled = 
-;label-fullscreen = 
-;label-floating = 
-;label-pseudotiled = P
-;label-locked = 
-;label-locked-foreground = #bd2c40
-;label-sticky = 
-;label-sticky-foreground = #fba922
-;label-private = 
-;label-private-foreground = #bd2c40
-;label-marked = M
-
-; Separator in between workspaces
-label-separator = |
-label-separator-padding = 1
-label-separator-foreground 				= ${colors.primary}
-
-[module/backlight]
-type = internal/xbacklight
-enable-scroll=true
-; Use the following command to list available cards:
-; $ ls -1 /sys/class/backlight/
-card = intel_backlight
-
-#label = %percentage%%
-label = 
-format = <ramp> <label>
-
-#format-padding = 4
-format-foreground 			= ${colors.primary}
-
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-padding = 4
+format-foreground = ${colors.primary}
+#format-background = ${colors.background}
+format-padding = 1
 
 [module/battery]
-type 						= internal/battery
-
-battery 					= BAT0
-poll-interval 					= 1
-
-full-at 					= 95
-label-full 					=
-;format-full 					= <ramp-capacity> <label-full>
-format-full 					= 
-format-full-foreground				= ${colors.primary}
-
-label-charging 					= %percentage%%
-format-charging 				=  <label-charging>
-format-charging-padding 			= 0
-format-charging-foreground			= ${colors.primary}
-
-label-discharging 				= %percentage%%
-;label-discharging 				= 
-format-discharging 				= <ramp-capacity> <label-discharging>
-format-discharing-padding 			= 4
-format-discharging-foreground			= ${colors.secondary}
-;format-discharging-background			= ${colors.background}
-
-ramp-capacity-0 				= 
-ramp-capacity-1 				= 
-ramp-capacity-2 				= 
-ramp-capacity-3 				= 
-ramp-capacity-4 				= 
-
-[module/volume]
-type 						= internal/pulseaudio
-; Sink to be used, if it exists (find using `pacmd list-sinks`, name field)
-; If not, uses default sink
-sink 						= alsa_output.pci-0000_00_1b.0.analog-stereo
-; Use PA_VOLUME_UI_MAX (~153%) if true, or PA_VOLUME_NORM (100%) if false
-; Default: true
-use-ui-max 					= true
-
-; Available tags:
-;   <label-volume> (default)
-;   <ramp-volume>
-;   <bar-volume>
-format-volume 					= <ramp-volume> <label-volume>
-
-; Available tokens:
-;   %percentage% (default)
-;label-volume = %percentage%%
-label-volume 					= 
-
-#format-volume-background 			= ${colors.background}
-format-volume-foreground 			= ${colors.primary}
-;format-volume-padding = 4
-
-; Available tags:
-;   <label-muted> (default)
-;   <ramp-volume>
-;   <bar-volume>
-;format-muted = <label-muted>
-
-format-muted-foreground 			= ${colors.foreground-alt}
-format-muted-background 			= ${colors.primary}
-format-muted-padding 				= 2
-
-; Available tokens:
-;   %percentage% (default)
-label-muted 					= 
-label-muted-foreground 				= #666
-
-; Only applies if <ramp-volume> is used
-ramp-volume-0 					= 
-ramp-volume-1 					= 
-ramp-volume-2 					= 
-ramp-headphones-0 				= 
-
-click-right 					= pavucontrol &
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-;PING SCRIPT
-;
-;
-
-[module/i3]
-type = internal/i3
-
-pin-workspaces = false
-strip-wsnumbers = true
-wrapping-scroll = true
-index-sort = true
-label-focused-foreground = #d8dee9
-label-unfocused-foreground = #3b4252
-label-focused = %index%
-label-unfocused = %index%
-label-visible = %index%
-label-urgent-foregound = #B48EAD
-label-focused-padding = 4
-label-unfocused-padding = 4
-label-visible-padding = 4
-;ws-icon-default = 
-;label-focused	= 
-;label-unfocused = 
-[module/time]
-type = internal/date
-format-foreground = #4271ae
-format-background = #d9ddd9
-format-padding = 4
-interval = 1.0
-date =  %H:%M:%S
-[module/date]
-type = internal/date
-
-date = %e %B - %A
-label = %date%
-[module/ewmh]
-type = internal/xworkspaces
-
-; Only show workspaces defined on the same output as the bar
-;
-; Useful if you want to show monitor specific workspaces
-; on different bars
-;
-; Default: false
-pin-workspaces = true
-
-; Create click handler used to focus desktop
-; Default: true
-enable-click = false
-
-; Create scroll handlers used to cycle desktops
-; Default: true
-enable-scroll = false
-
-[module/updatessss]
-type = custom/script
-exec = ~/.config/herbstluftwm/updates
-interval = 10800
-
-[module/touchpad]
-type = custom/script
-exec = ~/.config/herbstluftwm/touchpadStatus
-click-left = touchpadToggle
-interval = 1
-[module/go-weather]
-type = custom/script
-exec = ~/.config/herbstluftwm/go-weather
-interval = 300
-[module/monitor]
-type = custom/script
-exec = ~/.config/herbstluftwm/currentMonitor
-interval = 0.1
-format-padding = 4
-[module/info-pingrtt]
-type = custom/script
-exec = ~/Documents/info-pingrtt.sh
-interval = 10
-
-[module/playerctl]
-type = custom/script
-exec = ~/.config/i3/vlcControl
-click-left = playerctl play-pause
-click-middle = playerctl previous
-click-right = playerctl next
-interval=1
-[module/mellow]
-type = custom/script
-exec = ~/.config/i3/mellowst
-click-left = MellowPlayer -p
-click-middle = MellowPlayer -t
-click-right = MellowPlayer -f
-interval = 1
-[module/mpd]
-type = internal/mpd
-
-label-offline =
-format-online = <icon-prev> <toggle> <icon-next> <label-song> <bar-progress>
-#format-online = <icon-prev> <toggle> <icon-next> <label-song>
-format-offline = <label-offline>
-host = 127.0.0.1
-port = 6600
-icon-prev = 
-icon-stop = 
-icon-play = 
-icon-pause = 
-icon-next = 
-
-label-song-maxlen = 45
-label-song-ellipsis = true
-
-bar-progress-width = 10
-bar-progress-indicator = |
-bar-progress-fill = ─
-bar-progress-empty = ─
-
-
-
-
-
-
-[module/wlan]
-type = internal/network
-
-click-left = nmcli-rofi
-interface = wlp7s0
-format-background = #1D2021
-label-foreground = #d8dee9
-interval = 5
-
-label-connected =  %essid%
-label-disconnected =  Not Connected
-
-[module/cpu]
-type = internal/cpu
-label =  %percentage%%
-
-
-[module/memory]
-type = internal/memory
-label =  %gb_free% / %gb_total%
-
-
-
-[module/menu0]
-type = custom/menu
-format = <label-toggle> <menu>
-;format-underline = ${colors.white}
-format-padding = 1
-;format-margin = 1
-;format-background = ${colors.black}
-
-menu-0-0 = " shutdown "
-menu-0-0-exec = shutdown now
-menu-0-1 = " restart "
-menu-0-1-exec = shutdown -r now
-menu-0-2 =   cancel
-
-
-label-open = 
-label-close =
-
-[module/title]
-type = custom/script
-exec = ~/.config/herbstluftwm/getc
-interval = 0.1
-[module/focusedw]
-type = custom/script
-exec = ~/.config/herbstluftwm/getws
-interval = 0.1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[bar/white2]
-
-;------------;
-; DIMENSIONS ;
-;------------;
-
-width = 100%
-height = 12
-offset-y = 0
-offset-x = 0
-
-border-top-size = 10
-border-bottom-size = 10
-border-right-size = 10
-border-left-size=10
-monitor-strict=true
-;----------;
-; LOCATION ;
-;----------;
-
-
-
-modules-center = playerctl focusedw
-bottom = true
-monitor = LVDS1
-wm-restack = none
-override-redirect = false
-scroll-up = i3wm-wsnext
-scroll-down = i3wm-wsprev
-;-------;
-;--------;
-; COLORS ;
-;--------;
-
-
-border-color = #d8dee9
-background = #d8dee9
-foreground = #2e3440
-foreground-alt = #555
-
-
-
-;---------------;
-; MISCELLANEOUS ;
-;---------------;
-
-fixed-center = true
-padding-left = 2
-padding-right = 2
-module-margin = 1.5
-tray-position = right
-tray-detached = false
-
-
-
-[module/batteryw]
 type = internal/battery
 
-format-padding = 4
 battery = BAT1
-
 poll-interval = 1
 
 full-at = 95
+label-full = 
+format-full = <ramp-capacity> <label-full>
+format-full-foreground = ${colors.primary}
+
+label-charging = %percentage%% 
+format-charging =  <label-charging>
+format-charging-padding = 1
+format-charging-foreground = ${colors.primary}
 
 label-discharging = %percentage%%
-label-charging = %percentage%%
-label-full = %percentage%%
+format-discharging = <animation-discharging> <label-discharging>
+format-discharing-padding = 1
+format-discharging-foreground = ${colors.primary}
+;format-discharging-background			= ${colors.background}
 
-format-discharging = <ramp-capacity> <label-discharging>
-format-full = <ramp-capacity> <label-full>
-format-charging =  <label-charging>
+label-low = %percentage%%
+format-low = <animation-low> %percentage%%
+format-low-padding = 1
+format-low-foreground = ${colors.secondary}
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 
@@ -678,43 +230,52 @@ ramp-capacity-2 = 
 ramp-capacity-3 = 
 ramp-capacity-4 = 
 
-[module/volumew]
+; Only applies if <animation-charging> is used
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+; Framerate in milliseconds
+animation-charging-framerate = 750
+
+; Only applies if <animation-discharging> is used
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+; Framerate in milliseconds
+animation-discharging-framerate = 500
+
+; Only applies if <animation-low> is used
+; New in version 3.6.0
+animation-low-0 = !
+animation-low-1 = 
+animation-low-framerate = 200
+
+[module/volume]
 type = internal/pulseaudio
 ; Sink to be used, if it exists (find using `pacmd list-sinks`, name field)
 ; If not, uses default sink
-sink = alsa_output.pci-0000_00_1b.0.analog-stereo
-
+sink = alsa_output.pci-0000_00_1f.3.analog-stereo
 ; Use PA_VOLUME_UI_MAX (~153%) if true, or PA_VOLUME_NORM (100%) if false
-; Default: true
 use-ui-max = true
-; Available tags:
-;   <label-volume> (default)
-;   <ramp-volume>
-;   <bar-volume>
+click-right = pavucontrol &
+
 format-volume = <ramp-volume> <label-volume>
+label-volume = 
+format-volume-foreground 			= ${colors.primary}
+format-volume-padding = 1
 
-; Available tags:
-;   <label-muted> (default)
-;   <ramp-volume>
-;   <bar-volume>
-;format-muted = <label-muted>
-
-; Available tokens:
-;   %percentage% (default)
-;label-volume = %percentage%%
-
-; Available tokens:
-;   %percentage% (default)
-label-muted =
-label-muted-foreground = #666
-
+label-muted = 
+format-muted-foreground = ${colors.background-alt-1}
+format-muted-background = ${colors.primary}
+format-muted-padding = 2
 
 ; Only applies if <ramp-volume> is used
-ramp-volume-0 = 
-ramp-volume-1 = 
-ramp-volume-2 = 
-ramp-headphones-0 = 
-;PING SCRIPT
-;
-;
+ramp-volume-0 					= 
+ramp-volume-1 					= 
+ramp-volume-2 					= 
+ramp-headphones-0 				= 
 

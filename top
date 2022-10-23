@@ -1,0 +1,15 @@
+
+;-------------;
+; MODULES TOP ;
+;-------------;
+
+[bar/top]
+
+#modules-center = title focusedw
+modules-left = xwindow
+modules-center = i3
+#modules-center = date time memory
+#modules-right = go-weather volume battery
+#modules-right = volume backlight battery updates weather
+modules-right = volume backlight battery time
+

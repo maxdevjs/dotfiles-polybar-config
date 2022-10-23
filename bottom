@@ -1,0 +1,14 @@
+
+;----------------;
+; MODULES BOTTOM ;
+;----------------;
+
+[bar/bottom]
+inherit = bar/top
+
+bottom = true
+;tray-position = ""
+modules-left = updates
+modules-center = time
+modules-right = 
+
