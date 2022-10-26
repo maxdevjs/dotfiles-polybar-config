@@ -7,13 +7,17 @@ foreground = ${xrdb:foreground:#4d4d4c}
 foreground-alt = ${xrdb:foreground-alt:#adadbc}
 foreground-alt-1 = ${xrdb:foreground-alt:#55}
 background = ${xrdb:background:#3f3f3f}
-background-alt = ${xrdb:background-alt:#2a2a3a}
-background-alt-1 = ${xrdb:background-alt:#0a0a1a}
 ;3f3f3f
 border-color = ${xrdb:#f3f3f3}
 
+# foreground/text
 primary = ${xrdb:primary:#ffb52a}
+# background
+background-alt-1 = ${xrdb:background-alt:#0a0a1a}
+
+# urgent/...
 secondary = ${xrdb:secondary:#e60053}
+background-alt = ${xrdb:background-alt:#2a2a3a}
 
 [bar/top]
 
@@ -94,7 +98,7 @@ tray-detached = false
 #modules-center = title focusedw
 modules-left = xwindow
 modules-center = 
-modules-right = volume battery 
+modules-right =
 
 ;----------------;
 ; MODULES BOTTOM ;
@@ -107,9 +111,9 @@ inherit = bar/top
 
 bottom = true
 tray-position = ""
-modules-left = 
+modules-left = github
 modules-center = updates i3
-modules-right = github
+modules-right = xkeyboard volume battery 
 
 ;---------;
 ; MODULES ;
@@ -169,6 +173,32 @@ label-urgent = %index%
 label-urgent-foregound = ${colors.secondary}
 label-urgent-background = ${colors.primary}
 label-urgent-padding = 4
+
+[module/xkeyboard]
+type = internal/xkeyboard
+
+; List of indicators to ignore
+blacklist-0 = num lock
+blacklist-1 = scroll lock
+
+;format = <label-layout>
+format-spacing = 0
+;format-layout-padding = 1
+
+label-layout = %layout% %icon%
+label-layout-padding = 1
+label-layout-background = 
+label-layout-foreground = ${colors.primary}
+
+layout-icon-default = ⌨️
+
+; empty until will be available foreground color
+label-indicator-on-capslock = 
+label-indicator-off-capslock = 
+label-indicator-on-numlock = 
+label-indicator-off-numlock = 
+label-indicator-on-scrolllock = 
+label-indicator-off-scrolllock = 
 
 [module/updates]
 type = custom/script
@@ -265,7 +295,7 @@ click-right = pavucontrol &
 
 format-volume = <ramp-volume> <label-volume>
 label-volume = 
-format-volume-foreground 			= ${colors.primary}
+format-volume-foreground = ${colors.primary}
 format-volume-padding = 1
 
 label-muted = 
@@ -274,8 +304,8 @@ format-muted-background = ${colors.primary}
 format-muted-padding = 2
 
 ; Only applies if <ramp-volume> is used
-ramp-volume-0 					= 
-ramp-volume-1 					= 
-ramp-volume-2 					= 
-ramp-headphones-0 				= 
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-headphones-0 = 
 
